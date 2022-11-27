@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "443888611594",
+    "project_id": "flame-pong",
+    "storage_bucket": "flame-pong.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:443888611594:android:035898182c6a3f5a718af3",
+        "android_client_info": {
+          "package_name": "com.daemonw.pong.flame_pong"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "443888611594-ikca3lu8j4oh8tf4qak4hqvs08drapa3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzsX37KODnVJIQIJnhtQEiC9p1vsfBYQA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "443888611594-ikca3lu8j4oh8tf4qak4hqvs08drapa3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -19,6 +19,7 @@ class PongGame extends Forge2DGame with MultiTouchDragDetector {
 
   PongGame() : super(gravity: Vector2.zero()) {
     camera.viewport =  FixedResolutionViewport(Vector2(100, 160));
+    paused = true;
   }
 
   @override
@@ -37,7 +38,7 @@ class PongGame extends Forge2DGame with MultiTouchDragDetector {
   }
 }
 
-class Ball extends BodyComponent {
+class Ball extends BodyComponent with ContactCallbacks {
   static const _startingVelocity = 8.0;
   static const _maxSpeed = 20;
   final _random = Random();
@@ -49,6 +50,15 @@ class Ball extends BodyComponent {
     final vector = Vector2(_startingVelocity, 0)
       ..rotate(_random.nextDouble() * 2 * pi);
     body.linearVelocity = vector;
+  }
+
+
+  @override
+  void endContact(Object other, Contact contact) {
+    final velocity = body.linearVelocity;
+    if (velocity.y.abs() < 3) {
+      body.linearVelocity.y = 3;
+    }
   }
 
   @override
@@ -76,7 +86,11 @@ class Ball extends BodyComponent {
   void update(double dt) {
     if (body.linearVelocity.length > _maxSpeed) {
       body.linearVelocity.scaleTo(0.9);
-    }if (reset) {
+    }
+    if (body.position.x < 0 || body.position.x > gameRef.size.x) {
+      reset = true;
+    }
+    if (reset) {
       _reset();
       reset = false;
     }
