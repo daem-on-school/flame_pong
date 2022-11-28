@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flame/game.dart';
 import 'package:flame_pong/bloc/score.dart';
 import 'package:flame_pong/score_view.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -13,7 +14,7 @@ import 'game/game.dart';
 
 part 'main_view.dart';
 
-final firebaseEnabled = !Platform.isWindows;
+final firebaseEnabled = kIsWeb || !Platform.isWindows;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
