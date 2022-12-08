@@ -27,6 +27,11 @@ class MainView extends StatelessWidget {
             _recordScore(state, name);
           } else if (state is PlayingState) {
             _game.resumeEngine();
+            if (state.interest is Standard) {
+              _game.clearAngledWalls();
+            } else if (state.interest is Interesting) {
+              _game.makeInteresting();
+            }
           }
         },
         builder: (context, state) {

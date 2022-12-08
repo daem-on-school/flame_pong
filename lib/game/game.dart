@@ -5,17 +5,19 @@ import 'dart:math';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
-import 'package:flame_pong/bloc/score.dart';
+import 'package:flame_pong/bloc/state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part "walls.dart";
 part "paddles.dart";
+part "extras.dart";
 
 class PongGame extends Forge2DGame with MultiTouchDragDetector {
   final ball = Ball();
   late final _player = PlayerPaddle(this);
   late final _enemy = EnemyPaddle(this);
+  final _angledWalls = <AngledWall>[];
 
   PongGame() : super(gravity: Vector2.zero()) {
     camera.viewport =  FixedResolutionViewport(Vector2(100, 160));
@@ -29,6 +31,20 @@ class PongGame extends Forge2DGame with MultiTouchDragDetector {
     add(_player);
     add(_enemy);
     return super.onLoad();
+  }
+
+  void makeInteresting() {
+    if (_angledWalls.isNotEmpty) { return; }
+    _angledWalls.addAll([
+      AngledWall(Vector2(0, 0), Vector2(0, 16), Vector2(2, 8)),
+      AngledWall(Vector2(10, 0), Vector2(10, 16), Vector2(8, 8)),
+    ]);
+    addAll(_angledWalls);
+  }
+
+  void clearAngledWalls() {
+    _angledWalls.forEach(remove);
+    _angledWalls.clear();
   }
 
   @override
@@ -74,10 +90,12 @@ class Ball extends BodyComponent with ContactCallbacks {
       ..density = 1.0
       ..restitution = 1.0;
     final bodyDef = BodyDef(
-        userData: this,
-        type: BodyType.dynamic,
-        position: gameRef.size / 2,
-        bullet: true);
+      userData: this,
+      type: BodyType.dynamic,
+      position: gameRef.size / 2,
+      bullet: true,
+      fixedRotation: true
+    );
     return world.createBody(bodyDef)
       ..createFixture(fixtureDef);
   }

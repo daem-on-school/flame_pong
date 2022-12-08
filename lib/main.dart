@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flame/game.dart';
-import 'package:flame_pong/bloc/score.dart';
+import 'package:flame_pong/bloc/state.dart';
 import 'package:flame_pong/score_view.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

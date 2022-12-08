@@ -3,7 +3,7 @@ part of "game.dart";
 const paddleWidth = .6;
 const paddleHeight = .15;
 
-abstract class Paddle extends BodyComponent {
+abstract class Paddle extends BodyComponent with ContactCallbacks {
   final BodyType _bodyType;
   final double _yPos;
 
@@ -30,6 +30,13 @@ abstract class Paddle extends BodyComponent {
       ..position = Vector2(5.0, _yPos);
     return world.createBody(bodyDef)
       ..createFixture(fixtureDef);
+  }
+
+  @override
+  void beginContact(Object other, Contact contact) {
+    if (other is Ball) {
+      gameRef.buildContext!.read<PongBloc>().add(Bounced());
+    }
   }
 }
 
